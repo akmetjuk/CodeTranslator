@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "d5a9c960-516d-47e9-9fc5-cacbabe2abe7",
+		"name": "CodeTranslator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4157292"
+	},
+	"item": [
+		{
+			"name": "extractText",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"var error = f\\\"My error from code{error_code}\\\"\\nmsg = f\\\"error {101}\\\"\",\r\n    \"language\": \"csharp\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8101/extract",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8101",
+					"path": [
+						"extract"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "ExtractFromSQLCode",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"function get_kv(p_lcv tabval.lcv%type) return tabval.kv%type\\n    is\\n    l_kv tabval.kv%type;\\n  begin\\n    begin\\n         select kv into l_kv\\n                from tabval where upper(lcv)=upper(p_lcv);\\n               exception when no_data_found then\\n                  raise_application_error(-20000, 'Недопустимый код валюты '||p_lcv);\\n         end;\\n\\n    return l_kv;\\n  end;\\n\\n procedure parse_str(p_str varchar2, p_name out varchar2, p_val out varchar2)\\n    is\\n    begin\\n      p_name := substr(p_str,0,instr(p_str,'=')-1);\\n      p_val := substr(p_str,instr(p_str,'=')+1);\\n    end;\",\r\n    \"language\": \"sql\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8101/extract",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8101",
+							"path": [
+								"extract"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "date",
+							"value": "Sun, 14 Sep 2025 11:10:40 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "172"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"extracted\": {\n        \"results\": [\n            {\n                \"line\": 9,\n                \"original\": \"'Недопустимый код валюты '\",\n                \"suggest_Translation\": \"'Недопустимий код валюти Р\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "healthCheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8101",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8101"
+				}
+			},
+			"response": [
+				{
+					"name": "healthCheck",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8101",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8101"
+						}
+					},
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": "{\r\n    \"message\": \"CodeTraslator API is running.\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "extractFile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/D:/Repos/LLM/Samples_Code/CorpLight/SQL_ABS/BARS/VIEWS/V_MBM_LOAN_ACCOUNTS.SQL"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8101/extractFile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8101",
+					"path": [
+						"extractFile"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Extract from SQL file",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/Repos/LLM/Samples_Code/CorpLight/SQL_ABS/BARS/Packeges/mbm_payments_body.sql"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8101/extractFile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8101",
+							"path": [
+								"extractFile"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "date",
+							"value": "Sun, 14 Sep 2025 11:41:39 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "18468"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"extracted\": {\n        \"results\": [\n            {\n                \"line\": 4,\n                \"original\": \"--  константы\",\n                \"suggest_Translation\": \"- константи\"\n            },\n            {\n                \"line\": 8,\n                \"original\": \"'    - Сбербанк'\",\n                \"suggest_Translation\": \"- Сбербанк\"\n            },\n            {\n                \"line\": 12,\n                \"original\": \"-- код модуля\",\n                \"suggest_Translation\": \"- код модуля\"\n            },\n            {\n                \"line\": 17,\n                \"original\": \"-- статусы документа, кот. находится в промежуточной таблице импорта\",\n                \"suggest_Translation\": \"статус документа, який знаходиться в проміжному таблиці імпорту\"\n            },\n            {\n                \"line\": 19,\n                \"original\": \"-- только импортированный\",\n                \"suggest_Translation\": \"- тільки імпортовані\"\n            },\n            {\n                \"line\": 20,\n                \"original\": \"-- валидирован с ошибкми\",\n                \"suggest_Translation\": \"- виправлено помилки\"\n            },\n            {\n                \"line\": 21,\n                \"original\": \"-- валидированный\",\n                \"suggest_Translation\": \"- діє\"\n            },\n            {\n                \"line\": 22,\n                \"original\": \"-- оплаченный\",\n                \"suggest_Translation\": \"- платно\"\n            },\n            {\n                \"line\": 23,\n                \"original\": \"-- удаленный\",\n                \"suggest_Translation\": \"- дистанційний\"\n            },\n            {\n                \"line\": 25,\n                \"original\": \"-- удалить\",\n                \"suggest_Translation\": \"видалення\"\n            },\n            {\n                \"line\": 26,\n                \"original\": \"-- изменить\",\n                \"suggest_Translation\": \"увійти\"\n            },\n            {\n                \"line\": 27,\n                \"original\": \"-- добавить\",\n                \"suggest_Translation\": \"додати\"\n            },\n            {\n                \"line\": 30,\n                \"original\": \"-- коды ошибок проверки ОКПО\",\n                \"suggest_Translation\": \"- Коди перевірки OKPO\"\n            },\n            {\n                \"line\": 31,\n                \"original\": \"-- плательщик\",\n                \"suggest_Translation\": \"- платник\"\n            },\n            {\n                \"line\": 33,\n                \"original\": \"-- не числовое значение\",\n                \"suggest_Translation\": \"- не числове значення\"\n            },\n            {\n                \"line\": 34,\n                \"original\": \"-- длинна < 8-ми\",\n                \"suggest_Translation\": \"- довжина < 8 mi\"\n            },\n            {\n                \"line\": 35,\n                \"original\": \"-- не прошла проверку v_okpo\",\n                \"suggest_Translation\": \"заборонено перевірити v_okpo\"\n            },\n            {\n                \"line\": 36,\n                \"original\": \"-- получатель\",\n                \"suggest_Translation\": \"- одержувач\"\n            },\n            {\n                \"line\": 37,\n                \"original\": \"-- не числовое значение\",\n                \"suggest_Translation\": \"- не числове значення\"\n            },\n            {\n                \"line\": 38,\n                \"original\": \"-- длинна < 8-ми\",\n                \"suggest_Translation\": \"- довжина < 8 mi\"\n            },\n            {\n                \"line\": 39,\n                \"original\": \"-- не прошла проверку v_okpo\",\n                \"suggest_Translation\": \"заборонено перевірити v_okpo\"\n            },\n            {\n                \"line\": 41,\n                \"original\": \"-- все ОК\",\n                \"suggest_Translation\": \"- Всі права\"\n            },\n            {\n                \"line\": 45,\n                \"original\": \"-- таблица кодировки непечатаемых символов\",\n                \"suggest_Translation\": \"- таблиця кодування непринтованих символів\"\n            },\n            {\n                \"line\": 51,\n                \"original\": \"-- код успешной обработки\",\n                \"suggest_Translation\": \"код успішної обробки\"\n            },\n            {\n                \"line\": 53,\n                \"original\": \"-- переменная содержащая файл для импорта\",\n                \"suggest_Translation\": \"змінний, що містить файл для імпорту\"\n            },\n            {\n                \"line\": 66,\n                \"original\": \"'Недопустимый код валюты '\",\n                \"suggest_Translation\": \"'Недопустимий код валюти Р\"\n            },\n            {\n                \"line\": 82,\n                \"original\": \"--    Проверка балансового на пренадлежность к кассе\",\n                \"suggest_Translation\": \"- Перевірка балансу для попередньо золи\"\n            },\n            {\n                \"line\": 98,\n                \"original\": \"--    Является ли тег допревизита, тегом биса\",\n                \"suggest_Translation\": \"- Чи є тег попереднього перегляду, тег біс\"\n            },\n            {\n                \"line\": 99,\n                \"original\": \"--    return 0 - нет, 1- да, это тег БИС-а\",\n                \"suggest_Translation\": \"- повернення 0 - немає, 1 - так, це тег BIS\"\n            },\n            {\n                \"line\": 104,\n                \"original\": \"'(C|П)[0-9]{1,2}$'\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 104,\n                \"original\": \"'П'\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 114,\n                \"original\": \"--    Валидировать значение ОКПО\",\n                \"suggest_Translation\": \"- Визначте значення OKPO\"\n            },\n            {\n                \"line\": 116,\n                \"original\": \"--    p_okpo     - МФО счета\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 117,\n                \"original\": \"--    p_dk       - 0 - ОКПО А,  1-ОКПО Б (для соответсвующего кода ошибки)\",\n                \"suggest_Translation\": \"p_dk - 0 - OKPO A, 1-OKPO B (для відповідного коду помилки)\"\n            },\n            {\n                \"line\": 128,\n                \"original\": \"'Ошибка преобразования в число значения: '\",\n                \"suggest_Translation\": \"«Похід перетворення в число значення: Р\"\n            },\n            {\n                \"line\": 133,\n                \"original\": \"'Длинна ОКПО < 8: '\",\n                \"suggest_Translation\": \"'Long OKPO < 8:'\"\n            },\n            {\n                \"line\": 138,\n                \"original\": \"'Ошибка валидации ф-цией v_okpo: '\",\n                \"suggest_Translation\": \"«Повідомлення від v_okpo: Р\"\n            },\n            {\n                \"line\": 149,\n                \"original\": \"--    По лицевому счету и валюте получить наименование и ОКПО клиента\",\n                \"suggest_Translation\": \"до Введіть номер мобільного, який Ви вказали при укладаннi договору з банком - для ідентифікації\"\n            },\n            {\n                \"line\": 151,\n                \"original\": \"--    p_mfo      - МФО счета\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 152,\n                \"original\": \"--    p_nls      - лицевой счет\",\n                \"suggest_Translation\": \"- p_nls - особистий кабінет\"\n            },\n            {\n                \"line\": 153,\n                \"original\": \"--    p_kv       - валюта\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 154,\n                \"original\": \"--    p_dk       - 0 - сторона А, 1- сторона Б (для соотв. вывода ошибки)\",\n                \"suggest_Translation\": \"p_dk - 0 - сторона A, 1 - бічна B (для відповідної інфляції помилки)\"\n            },\n            {\n                \"line\": 155,\n                \"original\": \"--    p_force    - 1  - c сообщениями об ошибках, 0- просто подставить найденное значение\",\n                \"suggest_Translation\": \"p_force - 1 - c повідомлення про помилки, 0 - просто замініть значення, знайдене\"\n            },\n            {\n                \"line\": 204,\n                \"original\": \"' Нашли ОКПО='\",\n                \"suggest_Translation\": \"Р Ми знайшли OKPO'\"\n            },\n            {\n                \"line\": 204,\n                \"original\": \"' Код валидации: '\",\n                \"suggest_Translation\": \"'Валідаційний код: Р\"\n            },\n            {\n                \"line\": 213,\n                \"original\": \"--проверка на соответсвие счета клиенту, считанного из файла, проверка по ОКПО клиента\",\n                \"suggest_Translation\": \"перевірка відповідності облікового запису клієнту, читання з файлу, перевірка OKPO клієнта\"\n            },\n            {\n                \"line\": 235,\n                \"original\": \"--    Провалидировать часть полей док-та(при импорте) на корректность\",\n                \"suggest_Translation\": \"- Дієтна частина полів doc-ta (при імпорті) для виправлення\"\n            },\n            {\n                \"line\": 236,\n                \"original\": \"--    Некоторые поля корректируются\",\n                \"suggest_Translation\": \"- Деякі поля регулюються\"\n            },\n            {\n                \"line\": 237,\n                \"original\": \"--    При ошибке проверки  - выкидывает исключение\",\n                \"suggest_Translation\": \"до У разі помилки перевірки виняток виводиться виняток\"\n            },\n            {\n                \"line\": 239,\n                \"original\": \"--    p_impdoc      - структура док-та\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 258,\n                \"original\": \"-- проверка того, что мы можем дебетовать толко счет своего МФО\",\n                \"suggest_Translation\": \"Перевірити, що ми можемо тільки дебетувати рахунок наших МФО\"\n            },\n            {\n                \"line\": 265,\n                \"original\": \"-- проверим, может мы дебетуем свое нижестоящее МФО - тогда можно\",\n                \"suggest_Translation\": \"Давайте подивимося, якщо ми можемо дебетувати наші нижчі MFI - то ми можемо\"\n            },\n            {\n                \"line\": 279,\n                \"original\": \"-- проверка стороны А\",\n                \"suggest_Translation\": \"Перевірити бічний A\"\n            },\n            {\n                \"line\": 289,\n                \"original\": \"-- проверка контрольного разряда\",\n                \"suggest_Translation\": \"- виїзд\"\n            },\n            {\n                \"line\": 294,\n                \"original\": \"-- иногда наименов клиента и его ОКПО отсутствует в импортируемом документе\",\n                \"suggest_Translation\": \"Іноді ім'я клієнта і його OKPO не в імпортному документі\"\n            },\n            {\n                \"line\": 346,\n                \"original\": \"-- проверка стороны Б\",\n                \"suggest_Translation\": \"- Перевірити сторону Б\"\n            },\n            {\n                \"line\": 374,\n                \"original\": \"-- проверка контрольного разряда\",\n                \"suggest_Translation\": \"- виїзд\"\n            },\n            {\n                \"line\": 445,\n                \"original\": \"-- Общие реквизиты\",\n                \"suggest_Translation\": \"- Загальні деталі\"\n            },\n            {\n                \"line\": 472,\n                \"original\": \"--удалиь все лидирующие, конечные пробелы и непечатные символы\",\n                \"suggest_Translation\": \"видаліть всі провідні, кінцеві місця та немарковані символи\"\n            },\n            {\n                \"line\": 491,\n                \"original\": \"-- случай,  когда  подкрепление/изъятие банкоомата без дороги (1004-1001(тогда 66) или  1001-1004(тогда 39) )\",\n                \"suggest_Translation\": \"- випадок, коли арматура / зняття банкомату без дороги (1004-1001 (то 66) або 1001-1004 (то 39)\"\n            },\n            {\n                \"line\": 493,\n                \"original\": \"-- ( касса - касса)пополнение банкомата\",\n                \"suggest_Translation\": \"- (реєстрація кешу - касовий реєстр) поповнення банкомату\"\n            },\n            {\n                \"line\": 507,\n                \"original\": \"-- изъятие банкомата\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 524,\n                \"original\": \"'кассовый документ'\",\n                \"suggest_Translation\": \"'cash документ р\"\n            },\n            {\n                \"line\": 530,\n                \"original\": \"'проверяем наличие СКП'\",\n                \"suggest_Translation\": \"\\\"перемикання для SPC Р\"\n            },\n            {\n                \"line\": 533,\n                \"original\": \"'есть'\",\n                \"suggest_Translation\": \"про компанію р\"\n            },\n            {\n                \"line\": 534,\n                \"original\": \"-- прихiд каси\",\n                \"suggest_Translation\": \"- казі\"\n            },\n            {\n                \"line\": 543,\n                \"original\": \"-- видаток каси\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 555,\n                \"original\": \"'даного ск не сущ'\",\n                \"suggest_Translation\": \"р я не думаю, що р\"\n            },\n            {\n                \"line\": 577,\n                \"original\": \"--проверка на непечатные символы в назначении и наименовании\",\n                \"suggest_Translation\": \"перевірити недруковані символи в цілях та назві\"\n            },\n            {\n                \"line\": 592,\n                \"original\": \"'Ошибка при валидации полей док-та №'\",\n                \"suggest_Translation\": \"«Особливості поля докту No Р\"\n            },\n            {\n                \"line\": 600,\n                \"original\": \"--    Проверить может ли текущий пользователь оплатить данный документ\",\n                \"suggest_Translation\": \"- Перевірте, чи можна оплатити цей документ\"\n            },\n            {\n                \"line\": 602,\n                \"original\": \"--    p_impdoc      - структура док-та\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 654,\n                \"original\": \"--    Провалидировать доп. реквизиты док-та\",\n                \"suggest_Translation\": \"- Провалідувати додаткові деталі doc-t\"\n            },\n            {\n                \"line\": 655,\n                \"original\": \"--    Возвращает код ошибки или '0000' если все ОК\",\n                \"suggest_Translation\": \"- повертає код помилки або '0000' якщо все це OK\"\n            },\n            {\n                \"line\": 657,\n                \"original\": \"--    p_impref  - реф импортированного докумнета\",\n                \"suggest_Translation\": \"p_impref - рефлектор імпортного документа\"\n            },\n            {\n                \"line\": 684,\n                \"original\": \"--    Вставить док-т в oper и в operw\",\n                \"suggest_Translation\": \"- Вставте документ у опері та опері\"\n            },\n            {\n                \"line\": 686,\n                \"original\": \"--    p_impdoc      - структура док-та\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 705,\n                \"original\": \"-- дата системная вставки в OPER\",\n                \"suggest_Translation\": \"Дата вставки системи в ОПЕР\"\n            },\n            {\n                \"line\": 706,\n                \"original\": \"-- банковская дата ипорта файла\",\n                \"suggest_Translation\": \"рік випуску файлу\"\n            },\n            {\n                \"line\": 714,\n                \"original\": \"-- дата документа (из файла импорта)\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 715,\n                \"original\": \"-- дата прихода в банк (из файла импорта)\",\n                \"suggest_Translation\": \"дата прибуття в банк (з імпортного файлу)\"\n            },\n            {\n                \"line\": 734,\n                \"original\": \"-- вставка доп. реквизитов\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 738,\n                \"original\": \"'вставка реквизита <'\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 775,\n                \"original\": \"'Ошибка при вставке док-та в OPER док-та №'\",\n                \"suggest_Translation\": \"'Посольство в вставці док-т в OPER Doc-t Ні Р\"\n            },\n            {\n                \"line\": 783,\n                \"original\": \"--    Оплатить док-т кот. только что вставили в oper\",\n                \"suggest_Translation\": \"- Плата за док-т кота. Просто поставте в опер\"\n            },\n            {\n                \"line\": 785,\n                \"original\": \"--    p_impdoc      - структура док-та\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 794,\n                \"original\": \"-- как платить(по-факту, по-плану)\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 797,\n                \"original\": \"-- 37 - Оплата по факт.залишку = 1 / По план.залишку = 0 / Не платити = 2\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 807,\n                \"original\": \"'перед gl.dyntt2'\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 828,\n                \"original\": \"-- установка записи  в oper_list\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 832,\n                \"original\": \"'ошибка  оплаты док-та:'\",\n                \"suggest_Translation\": \"«док»: р\"\n            },\n            {\n                \"line\": 841,\n                \"original\": \"--    Оплатить внешний докумнет\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 842,\n                \"original\": \"--    p_doc     - структура документа с доп. реквизитами\",\n                \"suggest_Translation\": \"p_doc - структура документа з додатковими деталями\"\n            },\n            {\n                \"line\": 843,\n                \"original\": \"--    p_errcode - исходящий код ошибки\",\n                \"suggest_Translation\": \"p_errcode - вихідний код помилки\"\n            },\n            {\n                \"line\": 844,\n                \"original\": \"--    p_errmsg  - исходящее сообщение об ошибке\",\n                \"suggest_Translation\": \"p_errmsg - повідомлення про помилку\"\n            },\n            {\n                \"line\": 846,\n                \"original\": \"--    В поле p_doc.doc.ref - будет находиться реф БАРС-а\",\n                \"suggest_Translation\": \"- У поле p_doc.doc.ref - буде ref BARS-a\"\n            },\n            {\n                \"line\": 850,\n                \"original\": \"-- исходящий код ошибки\",\n                \"suggest_Translation\": \"- вихідний код помилки\"\n            },\n            {\n                \"line\": 851,\n                \"original\": \"-- исходящее сообщение об ошибке\",\n                \"suggest_Translation\": \"повідомлення про помилку\"\n            },\n            {\n                \"line\": 864,\n                \"original\": \"-- валидация реквизитов документа\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 867,\n                \"original\": \"-- валидация полномочий на совершение оплаты\",\n                \"suggest_Translation\": \"перевірка повноважень на оплату\"\n            },\n            {\n                \"line\": 870,\n                \"original\": \"-- валидация допреквизитов\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 881,\n                \"original\": \"'Док-т с имп.рефом '\",\n                \"suggest_Translation\": \"'Doc-t з ім. реф. Р\"\n            },\n            {\n                \"line\": 881,\n                \"original\": \"' оплачен рефом '\",\n                \"suggest_Translation\": \"\\\"замовити для рефлексу р\"\n            },\n            {\n                \"line\": 883,\n                \"original\": \"'Док-т с имп.рефом '\",\n                \"suggest_Translation\": \"'Doc-t з ім. реф. Р\"\n            },\n            {\n                \"line\": 883,\n                \"original\": \"' информационный - без оплаты'\",\n                \"suggest_Translation\": \"'інформативний - без оплати р\"\n            },\n            {\n                \"line\": 888,\n                \"original\": \"'Док-т с имп.рефом '\",\n                \"suggest_Translation\": \"'Doc-t з ім. реф. Р\"\n            },\n            {\n                \"line\": 888,\n                \"original\": \"' с рефом '\",\n                \"suggest_Translation\": \"з рефом\"\n            },\n            {\n                \"line\": 898,\n                \"original\": \"'Ошибка при оплате док-та с имп.рефом '\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 901,\n                \"original\": \"-- если ошибка прикладная далее exception не выкидывается\",\n                \"suggest_Translation\": \"якщо похибка програми не є додатковим винятком\"\n            },\n            {\n                \"line\": 973,\n                \"original\": \"-- точка отката\",\n                \"suggest_Translation\": \"- точка зворотного зв'язку\"\n            },\n            {\n                \"line\": 978,\n                \"original\": \"--валідація дати валютування\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 981,\n                \"original\": \"'Дата валютування документа менша банківської дати'\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 997,\n                \"original\": \"'Рахунок відправника не знайдено!'\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 999,\n                \"original\": \"-- представляемся отделением\",\n                \"suggest_Translation\": \"- надіслане відділенням\"\n            },\n            {\n                \"line\": 1003,\n                \"original\": \"-- вычисление операции для оплаты документа\",\n                \"suggest_Translation\": \"розрахунок угоди для оплати за документ\"\n            },\n            {\n                \"line\": 1070,\n                \"original\": \"'Не коректно сформовано параметр D_REC!'\",\n                \"suggest_Translation\": \"Параметри D_REC не виправлено\"\n            },\n            {\n                \"line\": 1087,\n                \"original\": \"-- возврат контекста\",\n                \"suggest_Translation\": \"\"\n            },\n            {\n                \"line\": 1093,\n                \"original\": \"--eсли exception запишем ошыбку в исх. параметр\",\n                \"suggest_Translation\": \"якщо виняток записано у виді. параметр\"\n            },\n            {\n                \"line\": 1096,\n                \"original\": \"-- запись полного сообщения об ошибке в журнал\",\n                \"suggest_Translation\": \"запис повного повідомлення про помилку в журналі\"\n            },\n            {\n                \"line\": 1099,\n                \"original\": \"-- откат к точке начала оплаты\",\n                \"suggest_Translation\": \"- повернення в початкову точку платежу\"\n            },\n            {\n                \"line\": 1101,\n                \"original\": \"-- возврат контекста\",\n                \"suggest_Translation\": \"\"\n            }\n        ]\n    },\n    \"language\": \"sql\"\n}"
+				}
+			]
+		}
+	]
+}
