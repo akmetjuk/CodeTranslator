@@ -1,0 +1,17 @@
+services:
+  coretranslator:
+    image: coretranslator
+   
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8101:8101
+
+  libretranslate:
+    image: libretranslate/libretranslate
+    
+    ports:
+      - "5000:5000"
+    environment:
+      - LT_LOAD_ONLY=en,ru,uk

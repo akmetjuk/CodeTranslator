@@ -1,0 +1,16 @@
+Build and Run 
+docker compose up -d --build
+
+Run
+docker compose up -d
+
+If you try to run localy virtual env you need to do this PS script (admin mode):
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+
+// new network
+docker network create dkNet
+
+// add network for containers
+docker run -d --name coretranslator --network dkNet coretranslator
+docker run -d --name libretranslate --network dkNet libretranslate/libretranslate

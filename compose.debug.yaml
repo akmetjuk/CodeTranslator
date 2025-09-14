@@ -1,0 +1,10 @@
+services:
+  coretranslator:
+    image: coretranslator
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn CodeTranslator:app --host 0.0.0.0 --port 8101"]
+    ports:
+      - 8101:8101
+      - 5678:5678
