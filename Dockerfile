@@ -3,8 +3,8 @@ FROM python:3-slim
 
 EXPOSE 8101
 
-ARG translatorService=  "http://libretranslate:5000"
-# "http://localhost:5000"
+ARG translatorService="http://libretranslate:5000"
+ARG matchThreshold="90.0"
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
